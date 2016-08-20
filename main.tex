@@ -132,14 +132,14 @@
 \begin{compactenum}
 	\item solve $\operatorname{det}(\mathbf{A} - \lambda \mathbf{I}) \overset{!}{=} 0$ resulting in $\{\lambda_i\}_i$
 	\item $\forall \lambda_i$:
-		solve $(\mathbf{A} - \lambda_i \mathbf{I}) \mathbf{x}_i = \mathbf{0}$, $\mathbf{x}_i$ is the $i$-th eigenvector.
-	\item (opt.) normalize eigenvector $q_i$: $q_i^{\text{norm}} = \frac{1}{\|q_i\|_2} q_i$.
+		solve $(\mathbf{A} - \lambda_i \mathbf{I}) \mathbf{x}_i = \mathbf{0}$, $\mathbf{x}_i$ is the $i$-th evec.
+	\item (opt.) normalize evec $q_i$: $q_i^{\text{norm}} = \frac{1}{\|q_i\|_2} q_i$.
 \end{compactenum}
 
 \subsection{Eigendecomposition}
 \begin{inparaitem}[\color{red}\textbullet]
   \item $\mathbf{A} \in \mathbb{R}^{N \times N}$ then $\mathbf{A} = \mathbf{Q} \boldsymbol{\Lambda} \mathbf{Q}^{-1}$ with $\mathbf{Q} \in \mathbb{R}^{N \times N}$.
-  \item if all eigenvalues nonzero: $\mathbf{A}^{-1} = \mathbf{Q} \boldsymbol{\Lambda}^{-1} \mathbf{Q}^{-1}$ and $(\boldsymbol{\Lambda}^{-1})_{i,i} = \frac{1}{\lambda_i}$
+  \item if all evals nonzero: $\mathbf{A}^{-1} = \mathbf{Q} \boldsymbol{\Lambda}^{-1} \mathbf{Q}^{-1}$ and $(\boldsymbol{\Lambda}^{-1})_{i,i} = \frac{1}{\lambda_i}$
   \item if $\mathbf{A}$ symmetric: $A = \mathbf{Q} \boldsymbol{\Lambda} \mathbf{Q^\top}$ (and $\mathbf{Q}$ is orthogonal).
 \end{inparaitem}
 
@@ -149,7 +149,7 @@
 	\item $P(x|y) := Pr[X = x | Y = y] := \frac{P(x,y)}{P(y)},\quad \text{if } P(y) > 0$
 	\item $\forall y \in Y: \sum_{x \in X} P(x|y) = 1$ (for any fixed $y$)
 	\item $P(x, y) = P(x|y) P(y)$
-	\item $P(x|y) = \frac{P(y|x)P(x)}{P(y)}$ (Bayes' rule)
+	\item $P(x|y) = \frac{P(y|x)P(x)}{P(y)}$ (Bayes)
 	\item $P(x|y) = P(x) \Leftrightarrow P(y|x) = P(y)$ (iff $X$, $Y$ independent)
 	\item $P(x_1, \ldots, x_n) = \prod_{i=1}^n P(x_i)$ (iff IID)
 \end{inparaitem}
@@ -161,8 +161,8 @@ $\mathbf{X} \in \mathbb{R}^{D \times N}$. $N$ observations, $K$ properties. Targ
 	\item Empirical Mean: $\overline{\mathbf{x}} = \frac{1}{N} \sum_{n=1}^N \mathbf{x}_n$
 	\item Center Data: $\overline{\mathbf{X}} = \mathbf{X} - [\overline{\mathbf{x}}, \ldots, \overline{\mathbf{x}}] = \mathbf{X} - \mathbf{M}$
 	\item Cov. Matrix: $\boldsymbol{\Sigma} = \frac{1}{N	} \sum_{n=1}^N (\mathbf{x}_n - \overline{\mathbf{x}}) (\mathbf{x}_n - \overline{\mathbf{x}})^\top = \frac{1}{N} \overline{\mathbf{X}}\overline{\mathbf{X}}^\top$
-	\item Eigenvalue Decomposition: $\boldsymbol{\Sigma} = \mathbf{U} \boldsymbol{\Lambda} \mathbf{U}^\top$, sort eigenvalues (and eigenvectors) in descending order
-	\item Select $K < D$, keep only the first $K$ eigenvalues and corresponding eigenvectors $\Rightarrow \mathbf{U}_K, \boldsymbol{\lambda}_K$
+	\item eval Decomposition: $\boldsymbol{\Sigma} = \mathbf{U} \boldsymbol{\Lambda} \mathbf{U}^\top$, sort evals (and evecs) in descending order
+	\item Select $K < D$, keep only the first $K$ evals and corresponding evecs $\Rightarrow \mathbf{U}_K, \boldsymbol{\lambda}_K$
 	\item Transform data onto new Basis: $\overline{\mathbf{Z}}_K = \mathbf{U}_K^\top \overline{\mathbf{X}}$
 	\item Reconstruct to original Basis: $\tilde{\overline{\mathbf{X}}} = \mathbf{U}_k \overline{\mathbf{Z}}_K$
 	\item Reverse centering: $\tilde{\mathbf{X}} = \tilde{\overline{\mathbf{X}}} + \mathbf{M}$
@@ -178,7 +178,7 @@ $\mathbf{X} \in \mathbb{R}^{D \times N}$. $N$ observations, $K$ properties. Targ
 	\item $\mathbf{A} = \mathbf{U} \mathbf{D} \mathbf{V}^\top = \sum_{k=1}^{\operatorname{rank}(\mathbf{A})} d_{k,k} u_k (v_k)^\top$
 	\item $\mathbf{A} \in \mathbb{R}^{N \times P}, \mathbf{U} \in \mathbb{R}^{N \times N}, \mathbf{D} \in \mathbb{R}^{N \times P}, \mathbf{V} \in \mathbb{R}^{P \times P}$
 	\item $\mathbf{U}^\top \mathbf{U} = I = \mathbf{V}^\top \mathbf{V}$ ($\mathbf{U}, \mathbf{V}$ cols o'nmal)
-	\item $\mathbf{U}$ columns are eigenvectors of $\mathbf{A} \mathbf{A}^\top$, $\mathbf{V}$ columns are eigenvectors of $\mathbf{A}^\top \mathbf{A}$, $\mathbf{D}$ diagonal elements are singular values (sqrts of eigenvalues of $\mathbf{A}^\top \mathbf{A}$ and $\mathbf{A} \mathbf{A}^\top$)
+	\item $\mathbf{U}$ columns are evecs of $\mathbf{A} \mathbf{A}^\top$, $\mathbf{V}$ columns are evecs of $\mathbf{A}^\top \mathbf{A}$, $\mathbf{D}$ diagonal elements are singular values (sqrts of evals of $\mathbf{A}^\top \mathbf{A}$ and $\mathbf{A} \mathbf{A}^\top$)
 	\item $(\mathbf{D}^{-1})_{i,i} = \frac{1}{\mathbf{D}_{i, i}}$ ($\mathbf{D} \in \mathbb{R}^{N \times P} \to \mathbf{D}^{-1} \in \mathbb{R}^{P \times N}$, transpose!)
 	\item Missing columns in $\mathbf{U}$ are basis of $\operatorname{null}(A^\top)$ and in $\mathbf{V}$ are basis of $\operatorname{null}(A)$. Cal: $\mathbf{A}^\top \mathbf{u} = \mathbf{0}$ or $\mathbf{A} \mathbf{v} = \mathbf{0}$ for $\mathbf{u}$ or $\mathbf{v}$.
 \end{inparaitem}
@@ -351,7 +351,7 @@ $f : \mathbb{R}^D \rightarrow \mathbb{R}$ is convex, if $dom\ f$ is a convex set
 \section{Sparse Coding}
 
 \subsection{Orthogonal Basis}
-For $\mathbf{x}$ and o.n.b. $\mathbf{U}$ compute $\mathbf{z} = \mathbf{U}^\top \mathbf{x} $. Approx $ \mathbf{\hat{x}} = \mathbf{U\hat{z}}$, $\hat{z}_i = z_i$ if $ \lvert z_i \rvert > \epsilon$ else 0.
+For $\mathbf{x}$ and \textsc{ONB} $\mathbf{U}$ compute $\mathbf{z} = \mathbf{U}^\top \mathbf{x} $. Approx $ \mathbf{\hat{x}} = \mathbf{U\hat{z}}$, $\hat{z}_i = z_i$ if $ \lvert z_i \rvert > \epsilon$ else 0.
 Reconstruction Error $\|\mathbf{x}-\mathbf{\hat{x}}\|^2 = \sum_{d\notin\sigma}\langle\mathbf{x},\mathbf{u}_d\rangle ^2$.
 Choice of base depends on signal. Fourier for global, wavelet for local support. PCA basis optimal for given $\Sigma$.
 
@@ -362,14 +362,14 @@ $\mathbf{U} \in \mathbb{R}^{D \times  L}$ for $\mathsf{dim}\text{(data)} = L > D
 \begin{inparaitem}[\color{red}\textbullet]
 	\item $m(\mathbf{U}) = \max_{i,j:\, i \neq j} | \mathbf{u}_i^\top \mathbf{u}_j |$
 	\item $m(\mathbf{B}) = 0$ if $\mathbf{B}$ orthogonal matrix
-	\item $m([\mathbf{B}, \mathbf{u}]) \geq \frac{1}{\sqrt{D}}$ if atom $\mathbf{u}$ is added to orthogonal basis $\mathbf{B}$ (o.n.b. = orthonormal base)
+	\item $m([\mathbf{B}, \mathbf{u}]) \geq \frac{1}{\sqrt{D}}$ if atom $\mathbf{u}$ is added to \textsc{ONB} $\mathbf{B}$
 \end{inparaitem}
 
 \textbf{Matching Pursuit (MP)}
 Approx of $\mathbf{x}$ in basis $\mathbf{U}$, using $K$ entries.
 Objective: $\mathbf{z}^\star \in \argmin_{\mathbf{z}} \|\mathbf{x} - \mathbf{Uz} \|_2$, s.t. $\|\mathbf{z}\|_0 \leq K$
 \begin{inlinelist}
-	\item init: $z \leftarrow 0, r \leftarrow x$
+	\item $z \leftarrow 0, r \leftarrow x$
 	\item while $\|\mathbf{z}\|_0 < K$ do
 	\item select atom with smallest angle $i^\star = \argmax_i |\langle \mathbf{u}_i, \mathbf{r} \rangle|$
 	\item update coefficients: $\mathbf{z}_{i^\star} \leftarrow \mathbf{z}_{i^\star} + \langle \mathbf{u}_{i^\star}, \mathbf{r} \rangle$
@@ -379,7 +379,7 @@ Objective: $\mathbf{z}^\star \in \argmin_{\mathbf{z}} \|\mathbf{x} - \mathbf{Uz}
 
 \textbf{Compressive Sensing}
 \begin{inparaitem}[\color{red}\textbullet]
-  \item $\mathbf{x} \in \mathbb{R}^D$, $K$-sparse in o.n.b. $\mathbf{U}$. $\mathbf{y} \in \mathbb{R}^M$ with $y_i = \langle \mathbf{w}_i, \mathbf{x}\rangle $: $M$ lin. combinations of signal; $\mathbf{y} = \mathbf{Wx} = \mathbf{WUz} = \mathbf{\theta z}$, $\theta \in \mathbb{R}^{M \times D}$
+  \item $\mathbf{x} \in \mathbb{R}^D$, $K$-sparse in \textsc{ONB} $\mathbf{U}$. $\mathbf{y} \in \mathbb{R}^M$ with $y_i = \langle \mathbf{w}_i, \mathbf{x}\rangle $: $M$ lin. combinations of signal; $\mathbf{y} = \mathbf{Wx} = \mathbf{WUz} = \mathbf{\theta z}$, $\theta \in \mathbb{R}^{M \times D}$
   \item Reconstruct $\mathbf{x} \in \mathbb{R}^D$ from $\mathbf{y}$; find $\mathbf{z}^\star \in \argmin_{\mathbf{z}}\|\mathbf{z}\|_0$, s.t. $\mathbf{y} = \mathbf{\theta z}$ (e.g. with MP). Given $\mathbf{z}$, reconstruct $\mathbf{x}$ via $\mathbf{x} = \mathbf{Uz}$
 \end{inparaitem}
 
