@@ -192,10 +192,9 @@ $\mathbf{X} \in \mathbb{R}^{D \times N}$. $N$ observations, $K$ properties. Targ
 \end{inlinelist}
 
 \subsection{Low-Rank approx -- $K$ largest evals and their evecs}
-\begin{compactdesc}
-	\item[Error Frobenius:] $\|\mathbf{A} - \tilde{\mathbf{A}}\|_F = \sqrt{\sum_{i > K} \sigma_i^2} = \sqrt{\sum_{i > K} \lambda_i}$
-	\item[Error Euclidean:] $\|\mathbf{A} - \tilde{\mathbf{A}}\|_2 = \sigma_{K+1}$
-\end{compactdesc}
+\begin{inparadesc}
+	$\|\mathbf{A} - \tilde{\mathbf{A}}\|_F = \sqrt{\sum_{i > K} \sigma_i^2} = \sqrt{\sum_{i > K} \lambda_i}$, $\|\mathbf{A} - \tilde{\mathbf{A}}\|_2 = \sigma_{K+1}$
+\end{inparadesc}
 
 \section{$K$-means Algorithm}
 \begin{inparadesc}
