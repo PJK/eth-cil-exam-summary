@@ -14,7 +14,7 @@
 \usepackage{xparse}
 
 % compact text
-\linespread{0.9}
+\linespread{0.1}
 \setlength{\parindent}{0pt}
 
 % compact lists even more
@@ -88,7 +88,7 @@
 \section{Essentials}
 \subsection{Matrix/Vector}
 \begin{compactdesc}
-	\item[Orthogonal:] (i.e. columns are orthonormal!) $\mathbf{A}^{-1} = \mathbf{A}^\top$, $\mathbf{A} \mathbf{A}^\top = \mathbf{A}^\top \mathbf{A} = \mathbf{I}$, $\operatorname{det}(\mathbf{A}) \in \{+1, -1\}$, $\operatorname{det}(\mathbf{A}^\top \mathbf{A}) = 1$
+	\item[Orthogonal:] (columns are orthonormal!) $\mathbf{A}^{-1} = \mathbf{A}^\top$, $\mathbf{A} \mathbf{A}^\top = \mathbf{A}^\top \mathbf{A} = \mathbf{I}$, $\operatorname{det}(\mathbf{A}) \in \{+1, -1\}$, $\operatorname{det}(\mathbf{A}^\top \mathbf{A}) = 1$, $\langle \mathbf{A}x, \mathbf{A}y \rangle = \langle x, y \rangle$, diagonizable: $\mathbf{A} = VDV^\top$
 	\item[Inner Product:] (in $\mathbb{R}^D$) $\langle \mathbf{x}, \mathbf{y} \rangle = \mathbf{x}^\top \mathbf{y} = \sum_{i=1}^{N} \mathbf{x}_i \mathbf{y}_i$.
 	\begin{inparaitem}[\color{red}\textbullet]
 		\item $\langle \mathbf{x} \pm \mathbf{y}, \mathbf{x} \pm \mathbf{y} \rangle = \langle \mathbf{x}, \mathbf{x} \rangle \pm 2 \langle \mathbf{x}, \mathbf{y} \rangle + \langle \mathbf{y}, \mathbf{y} \rangle$
@@ -242,8 +242,8 @@ For GMM let $\boldsymbol{\theta}_k = (\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)
 \subsection{Model Order Selection (AIC / BIC for GMM)}
 Trade-off between data fit (i.e. likelihood $p(\mathbf{X} | \theta)$) and complexity (i.e. \# of free parameters $\kappa(\cdot)$). For choosing $K$:
 \begin{inparaitem}[\color{red}\textbullet]
-	\item \textbf{Akaike Information Criterion}: $\operatorname{AIC}(\theta | \mathbf{X}) = -\log p_\theta(\mathbf{X}) + \kappa(\theta)$
-	\item \textbf{Bayesian Information Criterion}: $\operatorname{BIC}(\theta | \mathbf{X}) = -\log p_\theta(\mathbf{X}) + \frac{1}{2} \kappa(\theta) \log N$
+	\item \textbf{AIC}: $\operatorname{AIC}(\theta | \mathbf{X}) = -\log p_\theta(\mathbf{X}) + \kappa(\theta)$
+	\item \textbf{BIC}: $\operatorname{BIC}(\theta | \mathbf{X}) = -\log p_\theta(\mathbf{X}) + \frac{1}{2} \kappa(\theta) \log N$
 	\item \# of free params: fixed covariance matrix: $\kappa(\theta) = K \cdot D + (K - 1)$ ($K$: \# clusters, $D$: $\mathsf{dim}\text{(data)}=\mathsf{dim}(\mu_i)$, $K-1$: \# free clusters), full covariance matrix: $\kappa(\theta) = K(D + \frac{D(D+1)}{2}) + (K - 1)$.
 	\item Compare AIC/BIC for different $K$ -- the smaller the better. BIC penalizes complexity more.
 \end{inparaitem}
