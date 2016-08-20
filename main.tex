@@ -88,7 +88,7 @@
 \section{Essentials}
 \subsection{Matrix/Vector}
 \begin{compactdesc}
-	\item[Orthogonal:] (columns are orthonormal!) $\mathbf{A}^{-1} = \mathbf{A}^\top$, $\mathbf{A} \mathbf{A}^\top = \mathbf{A}^\top \mathbf{A} = \mathbf{I}$, $\operatorname{det}(\mathbf{A}) \in \{+1, -1\}$, $\operatorname{det}(\mathbf{A}^\top \mathbf{A}) = 1$, $\langle \mathbf{A}x, \mathbf{A}y \rangle = \langle x, y \rangle$, diagonizable: $\mathbf{A} = VDV^\top$
+	\item[Orthogonal:] (o'nmal cols) $\mathbf{A}^{-1} = \mathbf{A}^\top$, $\mathbf{A} \mathbf{A}^\top = \mathbf{A}^\top \mathbf{A} = \mathbf{I}$, $\operatorname{det}(\mathbf{A}) \in \{+1, -1\}$, $\operatorname{det}(\mathbf{A}^\top \mathbf{A}) = 1$, $\langle \mathbf{A}x, \mathbf{A}y \rangle = \langle x, y \rangle$, diagonizable: $\mathbf{A} = VDV^\top$
 	\item[Inner Product:] (in $\mathbb{R}^D$) $\langle \mathbf{x}, \mathbf{y} \rangle = \mathbf{x}^\top \mathbf{y} = \sum_{i=1}^{N} \mathbf{x}_i \mathbf{y}_i$.
 	\begin{inparaitem}[\color{red}\textbullet]
 		\item $\langle \mathbf{x} \pm \mathbf{y}, \mathbf{x} \pm \mathbf{y} \rangle = \langle \mathbf{x}, \mathbf{x} \rangle \pm 2 \langle \mathbf{x}, \mathbf{y} \rangle + \langle \mathbf{y}, \mathbf{y} \rangle$
@@ -97,7 +97,6 @@
 		\item $\langle \mathbf{x}, \mathbf{y} \rangle = \|\mathbf{x}\|_2 \cdot \|\mathbf{y}\|_2 \cdot \cos(\theta)$
 		\item If $\mathbf{y}$ is a unit vector then $\langle \mathbf{x}, \mathbf{y} \rangle$ projects $\mathbf{x}$ onto $\mathbf{y}$
 	\end{inparaitem}
-	\item[Outer Product:] $\mathbf{u} \mathbf{v}^\top$, $(\mathbf{u} \mathbf{v}^\top)_{i, j} = \mathbf{u}_i \mathbf{v}_j$
 	\item[Gram-Schmidt:] $\{\mathbf{w}_i\}_i$ non-orthogonal basis. $\mathbf{v}_n = \mathbf{w}_n - \sum_{i=1}^{n-1} \frac{\langle \mathbf{v}_i, \mathbf{w}_n \rangle}{\langle \mathbf{v}_i, \mathbf{v}_i \rangle} \mathbf{v}_i$ results in $\{\mathbf{v}_i\}_i$ an orthogonal basis
 \end{compactdesc}
 
@@ -129,8 +128,7 @@
 %\subsection{Basis Transformation}
 %$\mathbf{V}, \mathbf{W}$ are two basis matrices (each column is a basis vector, invertible). Representing $\mathbf{x}$ in basis $\mathbf{V}$ by \emph{coordinate vector} $\mathbf{a}$: $\mathbf{x} = \mathbf{V} \mathbf{a} \Rightarrow \mathbf{a} = \mathbf{V}^{-1} \mathbf{x}$. Knowing $\mathbf{a}$ representing $\mathbf{x}$ in $\mathbf{V}$ we can calc coordinate vector $\mathbf{b}$ representing $\mathbf{x}$ in $\mathbf{W}$ with: $\mathbf{x} = \mathbf{W}^{-1} \mathbf{b} = \mathbf{V}^{-1} \mathbf{a} \Rightarrow \mathbf{b} = \mathbf{W} \mathbf{V}^{-1} \mathbf{a}$.
 
-\subsection{Eigenvalue / -vectors}
-Eigenvalue Problem: $\mathbf{Ax} = \lambda \mathbf{x}$
+\subsection{Evals/evecs: $\mathbf{Ax} = \lambda \mathbf{x}$}
 \begin{compactenum}
 	\item solve $\operatorname{det}(\mathbf{A} - \lambda \mathbf{I}) \overset{!}{=} 0$ resulting in $\{\lambda_i\}_i$
 	\item $\forall \lambda_i$:
@@ -149,7 +147,7 @@ Eigenvalue Problem: $\mathbf{Ax} = \lambda \mathbf{x}$
 \begin{inparaitem}[\color{red}\textbullet]
 	\item $P(x) := Pr[X = x] := \sum_{y \in Y} P(x, y)$
 	\item $P(x|y) := Pr[X = x | Y = y] := \frac{P(x,y)}{P(y)},\quad \text{if } P(y) > 0$
-	\item $\forall y \in Y: \sum_{x \in X} P(x|y) = 1$ (property for any fixed $y$)
+	\item $\forall y \in Y: \sum_{x \in X} P(x|y) = 1$ (for any fixed $y$)
 	\item $P(x, y) = P(x|y) P(y)$
 	\item $P(x|y) = \frac{P(y|x)P(x)}{P(y)}$ (Bayes' rule)
 	\item $P(x|y) = P(x) \Leftrightarrow P(y|x) = P(y)$ (iff $X$, $Y$ independent)
@@ -179,22 +177,21 @@ $\mathbf{X} \in \mathbb{R}^{D \times N}$. $N$ observations, $K$ properties. Targ
 \begin{inparaitem}
 	\item $\mathbf{A} = \mathbf{U} \mathbf{D} \mathbf{V}^\top = \sum_{k=1}^{\operatorname{rank}(\mathbf{A})} d_{k,k} u_k (v_k)^\top$
 	\item $\mathbf{A} \in \mathbb{R}^{N \times P}, \mathbf{U} \in \mathbb{R}^{N \times N}, \mathbf{D} \in \mathbb{R}^{N \times P}, \mathbf{V} \in \mathbb{R}^{P \times P}$
-	\item $\mathbf{U}^\top \mathbf{U} = I = \mathbf{V}^\top \mathbf{V}$ ($\mathbf{U}, \mathbf{V}$ columns are orthonormal)
-	\item $\mathbf{U}$ columns are eigenvectors of $\mathbf{A} \mathbf{A}^\top$, $\mathbf{V}$ columns are eigenvectors of $\mathbf{A}^\top \mathbf{A}$, $\mathbf{D}$ diagonal elements are singular values, i.e. the square roots of the eigenvalues ($\mathbf{A}^\top \mathbf{A}$ and $\mathbf{A} \mathbf{A}^\top$ have the same eigenvalues)
-	\item $(\mathbf{D}^{-1})_{i,i} = \frac{1}{\mathbf{D}_{i, i}}$ ($\mathbf{D} \in \mathbb{R}^{N \times P} \to \mathbf{D}^{-1} \in \mathbb{R}^{P \times N}$, i.e. don't forget to transpose)
+	\item $\mathbf{U}^\top \mathbf{U} = I = \mathbf{V}^\top \mathbf{V}$ ($\mathbf{U}, \mathbf{V}$ cols o'nmal)
+	\item $\mathbf{U}$ columns are eigenvectors of $\mathbf{A} \mathbf{A}^\top$, $\mathbf{V}$ columns are eigenvectors of $\mathbf{A}^\top \mathbf{A}$, $\mathbf{D}$ diagonal elements are singular values (sqrts of eigenvalues of $\mathbf{A}^\top \mathbf{A}$ and $\mathbf{A} \mathbf{A}^\top$)
+	\item $(\mathbf{D}^{-1})_{i,i} = \frac{1}{\mathbf{D}_{i, i}}$ ($\mathbf{D} \in \mathbb{R}^{N \times P} \to \mathbf{D}^{-1} \in \mathbb{R}^{P \times N}$, transpose!)
 	\item Missing columns in $\mathbf{U}$ are basis of $\operatorname{null}(A^\top)$ and in $\mathbf{V}$ are basis of $\operatorname{null}(A)$. Cal: $\mathbf{A}^\top \mathbf{u} = \mathbf{0}$ or $\mathbf{A} \mathbf{v} = \mathbf{0}$ for $\mathbf{u}$ or $\mathbf{v}$.
 \end{inparaitem}
 
 \begin{inlinelist}
-	\item calc $\mathbf{A}^\top \mathbf{A}$.
-	\item calc eigenvalues of $\mathbf{A}^\top \mathbf{A}$, the square root of them, in descending order, are the diagonal elements of $\mathbf{D}$.
-	\item calc eigenvectors of $\mathbf{A}^\top \mathbf{A}$ using the eigenvalues resulting in the columns of $\mathbf{V}$.
-	\item calc the missing matrix: $\mathbf{U} = \mathbf{A} \mathbf{V} \mathbf{D}^{-1}$. Can be checked by calculating the eigenvectors of $\mathbf{A} \mathbf{A}^\top$.
+	\item $\Sigma = \mathbf{A}^\top \mathbf{A}$.
+	\item Sq root of eigenvals of $\Sigma$ descending on diag of $\mathbf{D}$.
+	\item Eigvecs of $\Sigma$ are cols of $\mathbf{V}$.
+	\item $\mathbf{U} = \mathbf{A} \mathbf{V} \mathbf{D}^{-1}$.
 	\item normalize each column of $\mathbf{U}$ and $\mathbf{V}$.
 \end{inlinelist}
 
-\subsection{Low-Rank approximation}
-Using only $K$ largest eigenvalues and corresponding eigenvectors. $\tilde{\mathbf{A}}_{i, j} = \sum_{k}^K \mathbf{U}_{i, k} \mathbf{D}_{k,k} \mathbf{V}_{j, k} = \mathbf{U}_{i, k} \mathbf{D}_{k,k} (\mathbf{V}^\top)_{k, j}$.
+\subsection{Low-Rank approx -- $K$ largest evals and their evecs}
 \begin{compactdesc}
 	\item[Error Frobenius:] $\|\mathbf{A} - \tilde{\mathbf{A}}\|_F = \sqrt{\sum_{i > K} \sigma_i^2} = \sqrt{\sum_{i > K} \lambda_i}$
 	\item[Error Euclidean:] $\|\mathbf{A} - \tilde{\mathbf{A}}\|_2 = \sigma_{K+1}$
@@ -244,7 +241,6 @@ Trade-off between data fit (i.e. likelihood $p(\mathbf{X} | \theta)$) and comple
 	\item \textbf{AIC}: $\operatorname{AIC}(\theta | \mathbf{X}) = -\log p_\theta(\mathbf{X}) + \kappa(\theta)$
 	\item \textbf{BIC}: $\operatorname{BIC}(\theta | \mathbf{X}) = -\log p_\theta(\mathbf{X}) + \frac{1}{2} \kappa(\theta) \log N$
 	\item \# of free params: fixed covariance matrix: $\kappa(\theta) = K \cdot D + (K - 1)$ ($K$: \# clusters, $D$: $\mathsf{dim}\text{(data)}=\mathsf{dim}(\mu_i)$, $K-1$: \# free clusters), full covariance matrix: $\kappa(\theta) = K(D + \frac{D(D+1)}{2}) + (K - 1)$.
-	\item Compare AIC/BIC for different $K$ -- the smaller the better. BIC penalizes complexity more.
 \end{inparaitem}
 
 \section{Word Embeddings}
@@ -398,7 +394,7 @@ Adapt the dictionary to signal characteristics. Objective: $(\mathbf{U}^\star, \
 
 \section{Robust PCA}
 \begin{compactitem}
-	\item Idea: Approximate $\mathbf{X}$ with $\mathbf{L} + \mathbf{S}$, $\mathbf{L}$ is low-rank, $\mathbf{S}$ is sparse.
+	\item Approx $\mathbf{X}$ with $\mathbf{L} + \mathbf{S}$, $\mathbf{L}$ low-rank, $\mathbf{S}$ sparse.
 	\item $\min_{\mathbf{L},\mathbf{S}}\mathsf{rank}(\mathbf{L}) + \mu \lVert \mathbf{S}\rVert_0$, s. t. $\mathbf{L} + \mathbf{S} = \mathbf{X}$. As non-convex, change to $\min_{\mathbf{L},\mathbf{S}} \|\mathbf{L}\|_\star + \lambda \lVert\mathbf{S}\rVert_1$ (\emph{not} the same in general)
 	\item Perfect reconstruction is \emph{not} possible if $\mathbf{S}$ is low-rank, $\mathbf{L}$ is sparse, or $\mathbf{X}$ is low-rank \textit{and} sparse at the same time
 \end{compactitem}
