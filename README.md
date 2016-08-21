@@ -2,7 +2,6 @@
 
 - Add outline of `proofs' from exercises
 	- ....
-- Revise dict learning
 
 # Disclaimer
 Please be advised that nothing found here is guaranteed to be complete, correct or anything else. Feel free to report errors, we will try to fix them.
