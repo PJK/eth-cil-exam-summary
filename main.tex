@@ -297,10 +297,19 @@ $\min_{\mathbf{U}, \mathbf{V}} J(\mathbf{U}, \mathbf{V}) = \frac{1}{2} \|\mathbf
 \end{inlinelist}
 
 \section{Convolutional Neural Networks}
-\textbf{Neurons}: $F_\sigma(\mathbf{x};\mathbf{w}) = \sigma(w_0 + \sum_{i=1}^M{x_iw_i})$. \textbf{Output}: linear regression; $\mathbf{y} = \mathbf{W}^L\mathbf{x}^{L-1}$, binary classification; $y_1 = \text{P}[Y=1|\mathbf{x}] = \frac{1}{1 + \exp[-\langle \mathbf{w}_1^L,\mathbf{x}^{L-1}\rangle]}$, multiclass; $y_k = \text{P}[Y=k|\mathbf{x}]= \frac{\exp[\langle \mathbf{w}_k^L,\mathbf{x}^{L-1}\rangle]}{\sum_{m=1}^{K}{\exp[\langle \mathbf{w}_m^L, \mathbf{x}^{L-1}\rangle]}}$. \textbf{Loss function} $l(y, \hat{y})$: squared loss; $\frac{1}{2}(y - \hat{y})^2$, cross-entropy loss; $-y \log \hat{y} - (1-y)\log(1-\hat{y})$.
+\textbf{Neurons}: $F_\sigma(\mathbf{x};\mathbf{w}) = \sigma(w_0 + \sum_{i=1}^M{x_iw_i})$. $L$ layers, 
+$y = \sigma^L(W^L \sigma^{L-1} ... (W^1 x))$
+\textbf{Output}: linear regression; $\mathbf{y} = \mathbf{W}^L\mathbf{x}^{L-1}$, 
+binary classification; $y_1 = \text{P}[Y=1|\mathbf{x}] = \frac{1}{1 + \exp[-\langle \mathbf{w}_1^L,\mathbf{x}^{L-1}\rangle]}$, 
+multiclass; $y_k = \text{P}[Y=k|\mathbf{x}]= \frac{\exp[\langle \mathbf{w}_k^L,\mathbf{x}^{L-1}\rangle]}{\sum_{m=1}^{K}{\exp[\langle \mathbf{w}_m^L, \mathbf{x}^{L-1}\rangle]}}$. \textbf{Loss function} $l(y, \hat{y})$: squared loss; $\frac{1}{2}(y - \hat{y})^2$, cross-entropy loss; $-y \log \hat{y} - (1-y)\log(1-\hat{y})$.
+\textbf{Backpropagation}: $x^{l-1}_j$ affects $x^l_i$. 
+Jacobian $J^l_{ij} = \frac{\partial x^l_i}{\partial x^{l-1}_j} = \dot{x}^l_i w_{ij}$ 
+($\dot{x}^l_i = \frac{\textup{d}\sigma^l}{\textup{d}z}(z_i); z_i = \langle w^l_i, x^{l-1} \rangle$). 
+Across $n$ layers: $\frac{\partial x^l_i}{\partial x^{l-n}_j} = \Pi_{i = l}^{l - n + 1} J^i$.
+Weights contribution: $\frac{\partial L}{\partial w^l_{ij}} = \frac{\partial L}{\partial x^l_i} \dot{x}^l_i x^{l - 1}_j$
 
 \subsection{Neural Networks for Images}
-Translation invariance of images $\rightarrow$ neurons compute same fct, shift invariant filters; weights defined as filter masks, e.g. convolution: $F_{n,m}(\mathbf{x};\mathbf{w}) = \sigma(b + \sum_{k=-2}^2\sum_{l=-2}^{2}{w_{k,l}x_{n+k,m+1}})$. To reduce dimension of convolution, use \{max, avg\}-pooling 
+Translation invariance $\rightarrow$ shift filters; weights as filter masks, e.g. convolution: $F_{n,m}(\mathbf{x};\mathbf{w}) = \sigma(b + \sum_{k=-2}^2\sum_{l=-2}^{2}{w_{k,l}x_{n+k,m+1}})$. Reduce dimension: \{max, avg\}-pooling 
 
 \section{Optimization}
 
