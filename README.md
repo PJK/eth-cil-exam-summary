@@ -5,9 +5,7 @@
 - Add outline of `proofs' from exercises
 	- ....
 - NN - backpropagation
-- remove SGD? (too similar)
-- lagrange -- if dom f??? what about it?
-	- add how to solve (partial derivs)
+- add how to solve (partial derivs)
 - subgradient?
 - overcomplete ONB -- B on single line
 - Revise dict learning
