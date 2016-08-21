@@ -106,10 +106,10 @@
 	\item $\|\mathbf{x}\|_0 = |\{i | x_i \neq 0\}|$
 	\item $\|\mathbf{x}\|_2 = \sqrt{\sum_{i=1}^{N} \mathbf{x}_i^2} = \sqrt{\langle \mathbf{x}, \mathbf{x} \rangle}$
 	\item $\|\mathbf{x}\|_p = \left( \sum_{i=1}^{N} |x_i|^p \right)^{\frac{1}{p}}$
-	\item $\mathbf{A} \in \mathbb{R}^{M \times N}$$\|\mathbf{A}\|_F :=\allowbreak \sqrt{\sum_{i=1}^{M} \sum_{j=1}^{N} |\mathbf{A}_{i, j}|^2} =\allowbreak \sqrt{\sum_{i=1}^{\min\{m, n\}} \sigma_i^2}$
+	\item $\mathbf{M} \in \mathbb{R}^{m \times n}$,\ $\|\mathbf{M}\|_F =\allowbreak \sqrt{\sum_{i=1}^{m} \sum_{j=1}^{n}\mathbf{m}_{i,j}^2} =\allowbreak \sqrt{\sum_{i=1}^{\min\{m, n\}} \sigma_i^2}$
   \item $\|\mathbf{M}\|_1 = \sum_{i,j} | m_{i,j}|$
-	\item $\|\mathbf{M}\|_2 = \sigma_{\text{max}}(\mathbf{A})$
-	\item $\|\mathbf{M}\|_p = \max_{\mathbf{v} \neq 0} \frac{\|\mathbf{X}\mathbf{v}\|_p}{\|\mathbf{v}\|_p}$
+	\item $\|\mathbf{M}\|_2 = \sigma_{\text{max}}(\mathbf{M})$
+	\item $\|\mathbf{M}\|_p = \max_{\mathbf{v} \neq 0} \frac{\|\mathbf{M}\mathbf{v}\|_p}{\|\mathbf{v}\|_p}$
 	\item $\|\mathbf{M}\|_\star = \sum_{i=1}^{\min(m, n)} \sigma_i$
 \end{inparaitem}
 
@@ -194,7 +194,9 @@ $\mathbf{X} \in \mathbb{R}^{D \times N}$. $N$ observations, $K$ properties. Targ
 
 \subsection{Low-Rank approx -- $K$ largest evals and their evecs}
 \begin{inparadesc}
-	$\|\mathbf{A} - \tilde{\mathbf{A}}\|_F = \sqrt{\sum_{i > K} \sigma_i^2} = \sqrt{\sum_{i > K} \lambda_i}$, $\|\mathbf{A} - \tilde{\mathbf{A}}\|_2 = \sigma_{K+1}$
+	$\tilde{\mathbf{A}}_{i, j} = \sum_{k}^K \mathbf{U}_{i, k} \mathbf{D}_{k,k} \mathbf{V}_{j, k} = \mathbf{U}_{i, k} \mathbf{D}_{k,k} (\mathbf{V}^\top)_{k, j}$.\\
+	$\|\mathbf{A} - \tilde{\mathbf{A}}\|_F = \sqrt{\sum_{i > K} \sigma_i^2} = \sqrt{\sum_{i > K} \lambda_i}$,
+	$\|\mathbf{A} - \tilde{\mathbf{A}}\|_2 = \sigma_{K+1}$
 \end{inparadesc}
 
 \section{$K$-means Algorithm}
@@ -251,7 +253,7 @@ Trade-off between data fit (i.e. likelihood $p(\mathbf{X} | \theta)$) and comple
   \item[Latent Vector Model:] $w \mapsto (\mathbf{x}_w, b_w) \in \mathbb{R}^{D+1} \\p_{\theta}(w|w') = \frac{\exp[\langle \mathbf{x}_w,\mathbf{x}_{w'}\rangle + b_w]}{\sum_{v\in V}{\exp[\langle \mathbf{x}_v,\mathbf{x}_{w'}\rangle + b_v ]}}$.
   Modifications:
   \begin{inparaitem}[\color{red}\textbullet]
-  \item split vocab in main vocab $V$, context vocab $C$: $\log p_{\theta}(w|w') = \langle x_{w'}, y_{w} \rangle + b_w$, word embed. $x_w$, context embed. $y_w$
+  \item split vocab in main vocab $V$, context vocab $C$: $\log p_{\theta}(w|w') = \langle  y_{w} , x_{w'} \rangle + b_w$,  word embed. $y_w$, context embed. $x_{w'}$
   \item use GloVe objective
   \end{inparaitem}
 \end{compactdesc}
@@ -275,7 +277,7 @@ unnormalized distribution $\rightarrow$ two-sided loss function
 \end{compactdesc}
 
 \subsection{EM for pLSA:}
-\begin{compactenum}
+\begin{compactenum}[\color{red} 1.]
   \item Log-Likelihood: $L(\mathbf{U}, \mathbf{V}) = \sum_{i,j} x_{i,j}\log p(w_j|d_i) = \break \sum_{(i,j) \in X} \log \sum_{z=1}^K p(w_j|z)p(z|d_i)$
 	\item E-Step (optimal q): $q_{zij} = \frac{p(w_j|z)p(z|d_i)}{\sum_{k=1}^K p(w_j|k)p(k|d_i)} := \frac{v_{zj}u_{zi}}{\sum_{k=1}^K v_{kj}u_{ki}}$
 	\item M-Steps: $p(z|d_i) = \frac{\sum_j x_{ij}q_{zij}}{\sum_j x_{ij}}\hspace{10pt}\&\hspace{10pt} p(w_j|z) = \frac{\sum_i x_{ij}q_{zij}}{\sum_{i,l}x_{il}q_{zil}}$
@@ -311,7 +313,7 @@ Across $n$ layers: $\frac{\partial x^l_i}{\partial x^{l-n}_j} = \Pi_{i = l}^{l -
 Weights contribution: $\frac{\partial L}{\partial w^l_{ij}} = \frac{\partial L}{\partial x^l_i} \dot{x}^l_i x^{l - 1}_j$
 
 \subsection{Neural Networks for Images}
-Translation invariance $\rightarrow$ shift filters; weights as filter masks, e.g. convolution: $F_{n,m}(\mathbf{x};\mathbf{w}) = \sigma(b + \sum_{k=-2}^2\sum_{l=-2}^{2}{w_{k,l}x_{n+k,m+1}})$. Reduce dimension: \{max, avg\}-pooling 
+Translation invariance $\rightarrow$ shift filters; weights as filter masks, e.g. convolution: $F_{n,m}(\mathbf{x};\mathbf{w}) = \sigma(b + \sum_{k=-2}^2\sum_{l=-2}^{2}{w_{k,l}x_{n+k,m+l}})$. Reduce dimension: \{max, avg\}-pooling 
 
 \section{Optimization}
 
@@ -366,7 +368,7 @@ RError $\|\mathbf{x}-\mathbf{\hat{x}}\|^2 = \sum_{d\notin\sigma}\langle\mathbf{x
 Fourier -- global, wavelet -- local. PCA basis optimal for given $\Sigma$.
 
 \subsection{Overcomplete Basis}
-$\mathbf{U} \in \mathbb{R}^{D \times  L}$ for $\mathsf{dim}\text{(data)} = L > D =$ \# atoms. Decoding involved $\rightarrow$ add constraint $\mathbf{z}^\star \in \argmin_\mathbf{z} \lVert \mathbf{z} \rVert_0$ s.t. $\mathbf{x} = \mathbf{Uz}$. NP-hard $\rightarrow$ approximate with 1-norm (convex) or with MP.
+$\mathbf{U} \in \mathbb{R}^{D \times  L}$ for \# atoms $ = L > D = \mathsf{dim}\text{(data)}$. Decoding involved $\rightarrow$ add constraint $\mathbf{z}^\star \in \argmin_\mathbf{z} \lVert \mathbf{z} \rVert_0$ s.t. $\mathbf{x} = \mathbf{Uz}$. NP-hard $\rightarrow$ approximate with 1-norm (convex) or with MP.
 
 \textbf{Coherence}
 \begin{inparaitem}[\color{red}\textbullet]
@@ -382,10 +384,10 @@ Objective: $\mathbf{z}^\star \in \argmin_{\mathbf{z}} \|\mathbf{x} - \mathbf{Uz}
 	\item $z \leftarrow 0, r \leftarrow x$
 	\item while $\|\mathbf{z}\|_0 < K$ do
 	\item select atom with smallest angle $i^\star = \argmax_i |\langle \mathbf{u}_i, \mathbf{r} \rangle|$
-	\item u'te: $\mathbf{z}_{i^\star} \leftarrow \mathbf{z}_{i^\star} + \langle \mathbf{u}_{i^\star}, \mathbf{r} \rangle$
+	\item u'te: $z_{i^\star} \leftarrow z_{i^\star} + \langle \mathbf{u}_{i^\star}, \mathbf{r} \rangle$
 	\item u'te residual: $\mathbf{r} \leftarrow \mathbf{r} - \langle \mathbf{u}_{i^\star}, \mathbf{r} \rangle \mathbf{u}_{i^\star}$.
 \end{inlinelist}
-\\\textbf{Exact recovery} when: $K<1/2( 1+1/m(\mathbf{U}))$
+\textbf{Exact recovery} when: $K<1/2( 1+1/m(\mathbf{U}))$
 
 \textbf{Compressive Sensing}
 \begin{inparaitem}[\color{red}\textbullet]
@@ -398,25 +400,31 @@ Adapt the dictionary to signal characteristics. Objective: $(\mathbf{U}^\star, \
 
 \textbf{Matrix Factorization by Iter Greedy Minimization}
 \begin{inlinelist}
-  \item Coding step: $\mathbf{Z}^{t+1} \in \argmin_\mathbf{Z} \| \mathbf{X} - \mathbf{U}^t \mathbf{Z} \|_F^2$ subject to $\mathbf{Z}$ being sparse
-  \item Column separation: For $n = 1, ..., N$: $z_n^{t+1} \in \argmin \|z\|_0$ 
-  	st $\| \mathbf{x}_n - \mathbf{U}^t \mathbf{Z} \|_2 \leq \sigma \|  \mathbf{x}_n \|_2$
-  \item Dictionary update step: $\mathbf{U}^{t+1} \in \argmin_\mathbf{U} \| \mathbf{X} - \mathbf{UZ}^{t+1} \|_F^2$, subject to $\forall l\in [L]:\|\mathbf{u}_l\|_2 = 1$ (non-separable, minimize residual by one column at a time)
+  \item Coding step: $\mathbf{Z}^{t+1} \in \argmin_\mathbf{Z} \| \mathbf{X} - \mathbf{U}^t \mathbf{Z} \|_F^2$ subject to $\mathbf{Z}$ being sparse ($\mathbf{z}_n^{t+1}\in \argmin_\mathbf{z}\|\mathbf{z}\|_0$ s.t.$\|\mathbf{x}_n - \mathbf{U}^t\mathbf{z}\|_2 \le \sigma \|\mathbf{x}_n\|_2$)
+  \item Dict update step: $\mathbf{U}^{t+1} \in \argmin_\mathbf{U} \| \mathbf{X} - \mathbf{UZ}^{t+1} \|_F^2$, subj to $\forall l\in [L]:\|\mathbf{u}_l\|_2 = 1$. (set $\mathbf{U} = [\mathbf{u}_1^t\cdots \mathbf{u}_l\cdots \mathbf{u}_L^t],~ \min_{u_l}\|\mathbf{X} - \mathbf{U}\mathbf{Z}^{t+1}\|_F^2 = \min_{u_l}\|\mathbf{R}_l^t - \mathbf{u}_l(\mathbf{z}_l^{t+1})^\top\|_F^2$ with $\mathbf{R}_l^t = \tilde{\mathbf{U}}\Sigma\tilde{\mathbf{V}}^\top$ by $\mathbf{u}^*_l=\tilde{\mathbf{u}}_1$)
 \end{inlinelist}
 
 \section{Robust PCA}
 \begin{compactitem}
 	\item Approx $\mathbf{X}$ with $\mathbf{L} + \mathbf{S}$, $\mathbf{L}$ low-rank, $\mathbf{S}$ sparse.
 	\item $\min_{\mathbf{L},\mathbf{S}}\mathsf{rank}(\mathbf{L}) + \mu \lVert \mathbf{S}\rVert_0$, s. t. $\mathbf{L} + \mathbf{S} = \mathbf{X}$. As non-convex, change to $\min_{\mathbf{L},\mathbf{S}} \|\mathbf{L}\|_\star + \lambda \lVert\mathbf{S}\rVert_1$ (\emph{not} the same in general)
-	\item Perfect reconstruction is \emph{not} possible if $\mathbf{S}$ is low-rank, $\mathbf{L}$ is sparse, or $\mathbf{X}$ is low-rank \textit{and} sparse at the same time
+	\item Perfect reconstruction is \emph{not} possible if $\mathbf{S}$ is low-rank, $\mathbf{L}$ is sparse, or $\mathbf{X}$ is low-rank \textit{and} sparse. Formally coherence: $\|\mathbf{U}^\top \mathbf{e}_i\|^2 \leq \frac{\nu r}{n}$, $\|\mathbf{V}^\top \mathbf{e}_i\|^2 \leq \frac{\nu r}{n}$, $\|\mathbf{UV}^\top\|^2_{ij} \leq \frac{\nu r}{n^2}$ : $\mathbf{L}=\mathbf{U}\mathbf{D}\mathbf{V}^\top$
 \end{compactitem}
+
+\subsection{Dual Ascent (Gradient Method for Dual Problem)}
+$\boldsymbol{\lambda}^{t+1} = \boldsymbol{\lambda}^{t} + \eta \nabla D(\boldsymbol{\lambda}^t)$,
+$ \nabla D (\boldsymbol{\lambda}) = \mathbf{A}\mathbf{x}^*-\mathbf{b}$ for $\mathbf{x}^* \in \arg\min_\mathbf{x} \mathcal{L}(\mathbf{x},\boldsymbol{\lambda})$
+\textbf{Dual Decomposition for Dual Ascent}: 
+\\$\mathbf{x}_i^{t+1} := \arg\min_{\mathbf{x}_i} \mathcal{L}_i(\mathbf{x}_i,\lambda^t)$; 
+$\boldsymbol{\lambda}^{t+1} := \boldsymbol{\lambda}^t + \eta^t \left( \sum_{i=1}^{N} \mathbf{A}_i \mathbf{x}_i^{t+1} -\mathbf{b} \right) $
 
 \subsection{Alternating Direction Method of Multipliers (ADMM)}
 $\min_{\mathbf{x}_1, \mathbf{x}_2} f_1(\mathbf{x}_1) + f_2(\mathbf{x}_2)$ s. t. $\mathbf{A}_1 \mathbf{x}_1 + \mathbf{A}_2 \mathbf{x}_2 = \mathbf{b}$, $f_1, f_2$ convex
 \begin{inparaitem}[\color{red}\textbullet]
 	\item Augmented Lagrangian: $L_p(\mathbf{x}_1, \mathbf{x}_2, \boldsymbol{\nu}) = f_1(\mathbf{x}_1) + f_2(\mathbf{x}_2) + \boldsymbol{\nu}^\top (\mathbf{A}_1 \mathbf{x}_1 + \mathbf{A}_2 \mathbf{x}_2 - \mathbf{b}) + \frac{p}{2}\| \mathbf{A}_1 \mathbf{x}_1 + \mathbf{A}_2 \mathbf{x}_2 - \mathbf{b} \|_2^2$
 	\item ADMM: $\mathbf{x}_1^{(t+1)} := \argmin_{\mathbf{x}_1} L_p(\mathbf{x}_1, \mathbf{x}_2^{(t)}, \boldsymbol{\nu}^{(t)})$, $\mathbf{x}_2^{(t+1)} := \argmin_{\mathbf{x}_2} L_p(\mathbf{x}_1^{(t+1)}, \mathbf{x}_2, \boldsymbol{\nu}^{(t)})$, $\boldsymbol{\nu}^{(t+1)} := \boldsymbol{\nu}^{(t)} + p(\mathbf{A}_1 \mathbf{x}_1^{(t+1)} + \mathbf{A}_2 \mathbf{x}_2^{(t+1)} - \mathbf{b})$
-  \item ADDM for RPCA: $f_1(\mathbf{L}) = \|\mathbf{L}\|_\star$, $f_2(\mathbf{S}) = \lambda \| \mathbf{S} \|_1$, $\mathbf{A}_1 \mathbf{x}_1 + \mathbf{A}_2 \mathbf{x}_2 = \mathbf{b} \text{ becomes } \mathbf{L} + \mathbf{S} = \mathbf{X}$, therefore $L_p(\mathbf{L}, \mathbf{S}, \boldsymbol{\nu}) = \|\mathbf{L}\|_* + \nu \|\mathbf{S}\|_1 + \left< \nu, \mathrm{vec}(\mathbf{L}+\mathbf{S}-\mathbf{X}) \right> + \frac{P}{2} \| \mathbf{L}+ \mathbf{S} - \mathbf{X} \|_F^2$
+  \item ADDM for RPCA: $f_1(\mathbf{L}) = \|\mathbf{L}\|_\star$, $f_2(\mathbf{S}) = \lambda \| \mathbf{S} \|_1$, $\mathbf{A}_1 \mathbf{x}_1 + \mathbf{A}_2 \mathbf{x}_2 = \mathbf{b} \text{ becomes } \mathbf{L} + \mathbf{S} = \mathbf{X}$, therefore $L_p(\mathbf{L}, \mathbf{S}, \boldsymbol{\nu}) = \|\mathbf{L}\|_* + \nu \|\mathbf{S}\|_1 + \left< \nu, \mathrm{vec}(\mathbf{L}+\mathbf{S}-\mathbf{X}) \right> + \frac{P}{2} \| \mathbf{L}+ \mathbf{S} - \mathbf{X} \|_F^2$ 
+  %updates: $\mathbf{L}^{t+1} = \mathcal{D}_{\rho^{-1}}(X-S-\rho^{-1}\text{mat}(\lambda))$
 \end{inparaitem}
 
 \raggedcolumns
