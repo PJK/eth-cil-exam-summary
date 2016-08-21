@@ -1,6 +1,5 @@
 ## TODOs
 
-- Revise GMM EM
 - Add outline of `proofs' from exercises
 	- ....
 - Revise dict learning
