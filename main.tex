@@ -88,7 +88,7 @@
 \begin{multicols*}{3}
 
 \section{Essentials}
-%\sheader{Matrix/Vector}
+\sheader{Matrix/Vector}
 \begin{compactdesc}
 	\item[Orthogonal:] (o'nmal cols) $\mathbf{A}^{-1} = \mathbf{A}^\top$, $\mathbf{A} \mathbf{A}^\top = \mathbf{A}^\top \mathbf{A} = \mathbf{I}$, $\operatorname{det}(\mathbf{A}) \in \{+1, -1\}$, $\operatorname{det}(\mathbf{A}^\top \mathbf{A}) = 1$, $\langle \mathbf{A}x, \mathbf{A}y \rangle = \langle x, y \rangle$, diagonizable: $\mathbf{A} = VDV^\top$
 	\item[Inner Product:] (in $\mathbb{R}^D$) $\langle \mathbf{x}, \mathbf{y} \rangle = \mathbf{x}^\top \mathbf{y} = \sum_{i=1}^{N} \mathbf{x}_i \mathbf{y}_i$.
@@ -103,7 +103,7 @@
 	\item[Jensen:] Convex $\varphi$: $\varphi ((\sum a_i x_i)/(\sum a_i)) \leq \frac{\sum a_i \varphi(x_i)}{\sum a_i}$, c've: $\geq$
 \end{compactdesc}
 
-%\sheader{Norms}
+\sheader{Norms}
 \begin{inparaitem}[\color{red}\textbullet]
 	\item $\|\mathbf{x}\|_0 = |\{i | x_i \neq 0\}|$
 	\item $\|\mathbf{x}\|_2 = \sqrt{\sum_{i=1}^{N} \mathbf{x}_i^2} = \sqrt{\langle \mathbf{x}, \mathbf{x} \rangle}$
@@ -157,6 +157,17 @@
 	\item $P(x_1, \ldots, x_n) = \prod_{i=1}^n P(x_i)$ (iff IID)
 \end{inparaitem}
 
+\sheader{Useful properties}
+\begin{inparaitem}[\color{red}\textbullet]
+	\item Orthonormality
+	\item Normality
+	\item Independence
+	\item Linearity
+	\item Convex/cavity
+	\item Differen/integrability
+	\item Inner product props
+	\item Monotonicity
+\end{inparaitem}
 
 \section{Dimensionality Reduction / PCA}
 $\mathbf{X} \in \mathbb{R}^{D \times N}$. $N$ observations, $K$ properties. Target: $\tilde{\mathbf{X}} \in \mathbb{R}^{K \times N}$.
@@ -413,6 +424,13 @@ Adapt the dictionary to signal characteristics. Objective: $(\mathbf{U}^\star, \
   \item Dict update step: $\mathbf{U}^{t+1} \in \argmin_\mathbf{U} \| \mathbf{X} - \mathbf{UZ}^{t+1} \|_F^2$, subj to $\forall l\in [L]:\|\mathbf{u}_l\|_2 = 1$. (set $\mathbf{U} = [\mathbf{u}_1^t\cdots \mathbf{u}_l\cdots \mathbf{u}_L^t],~ \min_{u_l}\|\mathbf{X} - \mathbf{U}\mathbf{Z}^{t+1}\|_F^2 = \min_{u_l}\|\mathbf{R}_l^t - \mathbf{u}_l(\mathbf{z}_l^{t+1})^\top\|_F^2$ with $\mathbf{R}_l^t = \tilde{\mathbf{U}}\Sigma\tilde{\mathbf{V}}^\top$ by $\mathbf{u}^*_l=\tilde{\mathbf{u}}_1$)
 \end{inlinelist}
 
+\sheader{Haar wavelets}
+\begin{inparaitem}
+	\item Systems are complete and pwise ortogonal
+	\item Mother wlet: $\psi = (1, 1, -1, -1)^\top$, $\psi_{n, k} = 2^{n/2}\psi(2^nt - k)$
+	\item Transform: $O(D)$ (cf. FFT $O(D \log D)$)
+\end{inparaitem}
+
 \section{Robust PCA}
 \begin{compactitem}
 	\item Approx $\mathbf{X}$ with $\mathbf{L} + \mathbf{S}$, $\mathbf{L}$ low-rank, $\mathbf{S}$ sparse.
@@ -423,11 +441,12 @@ Adapt the dictionary to signal characteristics. Objective: $(\mathbf{U}^\star, \
 \sheader{Dual Ascent (Gradient Method for Dual Problem)}
 $\boldsymbol{\lambda}^{t+1} = \boldsymbol{\lambda}^{t} + \eta \nabla D(\boldsymbol{\lambda}^t)$,
 $ \nabla D (\boldsymbol{\lambda}) = \mathbf{A}\mathbf{x}^*-\mathbf{b}$ for $\mathbf{x}^* \in \arg\min_\mathbf{x} \mathcal{L}(\mathbf{x},\boldsymbol{\lambda})$
-\textbf{Dual Decomposition for Dual Ascent}: 
+
+\sheader{Dual Decomposition for Dual Ascent}: 
 \\$\mathbf{x}_i^{t+1} := \arg\min_{\mathbf{x}_i} \mathcal{L}_i(\mathbf{x}_i,\lambda^t)$; 
 $\boldsymbol{\lambda}^{t+1} := \boldsymbol{\lambda}^t + \eta^t \left( \sum_{i=1}^{N} \mathbf{A}_i \mathbf{x}_i^{t+1} -\mathbf{b} \right) $
 
-\sheader{Alternating Direction Method of Multipliers (ADMM)}
+\sheader{ADMM}
 $\min_{\mathbf{x}_1, \mathbf{x}_2} f_1(\mathbf{x}_1) + f_2(\mathbf{x}_2)$ s. t. $\mathbf{A}_1 \mathbf{x}_1 + \mathbf{A}_2 \mathbf{x}_2 = \mathbf{b}$, $f_1, f_2$ convex
 \begin{inparaitem}[\color{red}\textbullet]
 	\item Augmented Lagrangian: $L_p(\mathbf{x}_1, \mathbf{x}_2, \boldsymbol{\nu}) = f_1(\mathbf{x}_1) + f_2(\mathbf{x}_2) + \boldsymbol{\nu}^\top (\mathbf{A}_1 \mathbf{x}_1 + \mathbf{A}_2 \mathbf{x}_2 - \mathbf{b}) + \frac{p}{2}\| \mathbf{A}_1 \mathbf{x}_1 + \mathbf{A}_2 \mathbf{x}_2 - \mathbf{b} \|_2^2$
