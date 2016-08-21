@@ -4,8 +4,6 @@
 - Revise GMM EM
 - Add outline of `proofs' from exercises
 	- ....
-- add how to solve (partial derivs)
-- overcomplete ONB -- B on single line
 - Revise dict learning
 
 # Disclaimer
