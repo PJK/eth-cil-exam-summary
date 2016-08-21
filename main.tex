@@ -86,7 +86,7 @@
 \begin{multicols*}{3}
 
 \section{Essentials}
-\subsection{Matrix/Vector}
+%\subsection{Matrix/Vector}
 \begin{compactdesc}
 	\item[Orthogonal:] (o'nmal cols) $\mathbf{A}^{-1} = \mathbf{A}^\top$, $\mathbf{A} \mathbf{A}^\top = \mathbf{A}^\top \mathbf{A} = \mathbf{I}$, $\operatorname{det}(\mathbf{A}) \in \{+1, -1\}$, $\operatorname{det}(\mathbf{A}^\top \mathbf{A}) = 1$, $\langle \mathbf{A}x, \mathbf{A}y \rangle = \langle x, y \rangle$, diagonizable: $\mathbf{A} = VDV^\top$
 	\item[Inner Product:] (in $\mathbb{R}^D$) $\langle \mathbf{x}, \mathbf{y} \rangle = \mathbf{x}^\top \mathbf{y} = \sum_{i=1}^{N} \mathbf{x}_i \mathbf{y}_i$.
@@ -98,9 +98,10 @@
 		\item If $\mathbf{y}$ is a unit vector then $\langle \mathbf{x}, \mathbf{y} \rangle$ projects $\mathbf{x}$ onto $\mathbf{y}$
 	\end{inparaitem}
 	\item[Gram-Schmidt:] $\{\mathbf{w}_i\}_i$ non-orthogonal basis. $\mathbf{v}_n = \mathbf{w}_n - \sum_{i=1}^{n-1} \frac{\langle \mathbf{v}_i, \mathbf{w}_n \rangle}{\langle \mathbf{v}_i, \mathbf{v}_i \rangle} \mathbf{v}_i$ results in $\{\mathbf{v}_i\}_i$ an orthogonal basis
+	\item[Jensen:] Convex $\varphi$: $\varphi ((\sum a_i x_i)/(\sum a_i)) \leq \frac{\sum a_i \varphi(x_i)}{\sum a_i}$, c've: $\geq$
 \end{compactdesc}
 
-\subsection{Norms}
+%\subsection{Norms}
 \begin{inparaitem}[\color{red}\textbullet]
 	\item $\|\mathbf{x}\|_0 = |\{i | x_i \neq 0\}|$
 	\item $\|\mathbf{x}\|_2 = \sqrt{\sum_{i=1}^{N} \mathbf{x}_i^2} = \sqrt{\langle \mathbf{x}, \mathbf{x} \rangle}$
@@ -209,10 +210,10 @@ $\mathbf{X} \in \mathbb{R}^{D \times N}$. $N$ observations, $K$ properties. Targ
 
 \subsection{Clustering Stability}
 \begin{inparaitem}[\color{red}\textbullet]
-  \item dist. between clust. (same data): $d(C,C') := \min_\Pi \frac{1}{2}\|Z-\Pi(Z')\|^2_F$ , $\Pi(Z
+  \item Distance: $d(C,C') := \min_\Pi \frac{1}{2}\|Z-\Pi(Z')\|^2_F$ , $\Pi(Z
 ')$ = row perm. of $Z'$
   \item arbitrary sets $\mathbf{X},\mathbf{X'}$ of size $N,N'$: $r := \frac{1}{N'} \min_{\Pi} \{ \sum_{n=1}^{N'} \mathbb{I}_{\{\Pi(\phi(x'_n)) \neq z'_n\} } \}$ ($\phi$: multi-class classifier trained on ($\mathbf{X},\mathbf{Z}$))
-  \item for $K$ clusters: $\text{stability} := 1 - \frac{r}{r_{rand}}$ (1 good, 0 bad), rand. clust. of equal size: $r_{rand} = \frac{K-1}{K}$.
+  \item for $K$ clusters: $\text{stability} := 1 - \frac{r}{r_{rand}}$ (1 good), rand. clust. of equal size: $r_{rand} = \frac{K-1}{K}$.
 \end{inparaitem}
 
 \section{Gaussian Mixture Models (GMM)}

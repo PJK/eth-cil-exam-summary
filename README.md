@@ -1,6 +1,5 @@
 ## TODOs
 
-- Abbreviate clustering stability  
 - Revise GMM EM
 - Add outline of `proofs' from exercises
 	- ....
